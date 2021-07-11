@@ -3,13 +3,14 @@ import Todo from "./Todo";
 
 const TodoList = memo(props => {
     const {todoList} = props
+    console.log({...props})
     return(
         <section className="main">
             <input className="toggle-all"/>
             <label htmlFor="toggle-all"></label>
             <ul className="todo-list">
                 {
-                    todoList.map(todo => <Todo key={`todo${todo.id}`} {...{todo}} />)
+                    todoList.map((todo, index) => <Todo key={index} {...{todo}} {...props} index={index}/>)
                 }
             </ul>
         </section>

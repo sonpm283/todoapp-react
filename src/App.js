@@ -22,7 +22,8 @@ class App extends PureComponent {
           text: 'todo 3',
           isCompleted: false
         }
-      ]
+      ],
+      todoEditingId: ''
   }
 
   addTodo= (todo={}) => {
@@ -31,12 +32,22 @@ class App extends PureComponent {
     }))
   }
 
+  getTodoEditingId = (id='') => {
+    this.setState({
+      todoEditingId: id
+    })
+  }
+
   render() {
-    const {todoList} = this.state
+    const {todoList, todoEditingId} = this.state
     return (
       <div className="todoapp">
         <Header addTodo = {this.addTodo} />
-        <TodoList todoList={todoList} />
+        <TodoList 
+          todoList={todoList}
+          todoEditingId = {todoEditingId}
+          getTodoEditingId = {this.getTodoEditingId}
+         />
         <Footer />
       </div>
     )
