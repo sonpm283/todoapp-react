@@ -14,6 +14,20 @@ body {
     margin: 0;
     padding: 0;
     list-style: none;
+    overflow-y: auto;
+    height: 300px;
+}
+
+.todo-list::-webkit-scrollbar {
+    appearance: none;
+}
+
+.todo-list::-webkit-scrollbar:vertical {
+    width: 10px;
+}
+
+.todo-list::-webkit-scrollbar-thumb {
+    background-color: rgba(204, 204, 204, .7);
 }
 
 .todo-list li {
@@ -36,6 +50,7 @@ body {
     border: none;
     -webkit-appearance: none;
     appearance: none;
+    cursor: pointer;
 }
 
 input[type="checkbox" i] {

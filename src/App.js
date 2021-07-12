@@ -38,6 +38,23 @@ class App extends PureComponent {
     })
   }
 
+  onEditTodo = (todo = {}, index = -1) => {
+    if(index >= 0) {
+      const {todoList: list} = this.state
+      list.splice(index, 1, todo)
+      this.setState({
+        todoList: list,
+        todoEditingId: ''
+      })
+    }
+  }
+
+  markCompleted = (id = '') => {
+    this.setState(preState => ({
+      todoList: preState.todoList.map(todo => todo.id === id ? ({...todo, isCompleted: !todo.isCompleted}): todo)
+    }))
+  }
+
   render() {
     const {todoList, todoEditingId} = this.state
     return (
@@ -47,6 +64,8 @@ class App extends PureComponent {
           todoList={todoList}
           todoEditingId = {todoEditingId}
           getTodoEditingId = {this.getTodoEditingId}
+          onEditTodo = {this.onEditTodo}
+          markCompleted = {this.markCompleted}
          />
         <Footer />
       </div>
