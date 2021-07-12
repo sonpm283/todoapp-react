@@ -3,7 +3,6 @@ import Todo from "./Todo";
 
 const TodoList = memo(props => {
     const {todoList} = props
-    console.log({...props})
     return(
         <section className="main">
             <input className="toggle-all"/>
