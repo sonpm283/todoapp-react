@@ -4,26 +4,34 @@ import Footer from "./components/Footer"
 import TodoList from "./components/TodoList"
 import './css/Todo.css'
 
+const isNotCheckedAll = (todos = []) => todos.find(todo => !todo.isCompleted)
 class App extends PureComponent {
-    state = {
-      todoList: [
-        {
-          id: 1,
-          text: 'todo 1',
-          isCompleted: true
-        },
-        {
-          id: 2,
-          text: 'todo 2',
-          isCompleted: false
-        },
-        {
-          id: 3,
-          text: 'todo 3',
-          isCompleted: false
-        }
-      ],
-      todoEditingId: ''
+  state = {
+    todoList: [
+      {
+        id: 1,
+        text: 'todo 1',
+        isCompleted: true
+      },
+      {
+        id: 2,
+        text: 'todo 2',
+        isCompleted: true
+      },
+      {
+        id: 3,
+        text: 'todo 3',
+        isCompleted: false
+      }
+    ],
+    todoEditingId: '',
+    isCheckedAll: false
+  }
+
+  UNSAFE_componentWillMount () {
+    this.setState({
+      isCheckedAll: !isNotCheckedAll(this.state.todoList)
+    })
   }
 
   addTodo= (todo={}) => {
@@ -49,14 +57,25 @@ class App extends PureComponent {
     }
   }
 
-  markCompleted = (id = '') => {
+  checkAllTodos = () => {
+    const {todoList, isCheckedAll} = this.state
     this.setState(preState => ({
-      todoList: preState.todoList.map(todo => todo.id === id ? ({...todo, isCompleted: !todo.isCompleted}): todo)
+      todoList: todoList.map(todo => ({...todo, isCompleted: ! isCheckedAll})),
+      isCheckedAll: !preState.isCheckedAll
+    }))
+  }
+
+  markCompleted = (id = '') => {
+    const { todoList } = this.state
+    const updateList = todoList.map(todo => todo.id === id ? ({...todo, isCompleted: !todo.isCompleted}): todo)
+    this.setState(({
+      todoList: updateList,
+      isCheckedAll: !isNotCheckedAll(updateList)
     }))
   }
 
   render() {
-    const {todoList, todoEditingId} = this.state
+    const {todoList, todoEditingId, isCheckedAll} = this.state
     return (
       <div className="todoapp">
         <Header addTodo = {this.addTodo} />
@@ -66,6 +85,8 @@ class App extends PureComponent {
           getTodoEditingId = {this.getTodoEditingId}
           onEditTodo = {this.onEditTodo}
           markCompleted = {this.markCompleted}
+          isCheckedAll = {isCheckedAll}
+          checkAllTodos = {this.checkAllTodos}
          />
         <Footer />
       </div>

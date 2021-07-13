@@ -30,7 +30,7 @@ const Todo = memo(props => {
                     onChange={e => setText(e.target.value)}
                     onBlur={editTodo}
                     onKeyPress={(e) => {
-                        if(e.key=='Enter'){
+                        if(e.key === 'Enter'){
                             editTodo()
                         }
                     }}
